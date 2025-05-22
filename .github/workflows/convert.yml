@@ -19,7 +19,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y kpartx mount losetup gzip tar curl
+        sudo apt-get install -y kpartx util-linux gzip tar curl
 
     - name: Download image
       run: |
