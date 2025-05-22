@@ -6,7 +6,9 @@ on:
       image_url:
         description: "URL to OpenWRT efi.img.gz"
         required: true
-        default: "https://example.com/openwrt-xx.xx.2025-armsr-armv8-generic-ext4-combined-efi.img.gz"
+        type: string
+        default: ""
+        placeholder: "https://downloads.openwrt.org/releases/24.10.1/targets/armsr/armv8/openwrt-24.10.1-armsr-armv8-generic-ext4-combined-efi.img.gz"
 
 jobs:
   convert:
