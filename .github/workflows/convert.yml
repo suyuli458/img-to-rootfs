@@ -1,0 +1,37 @@
+name: Convert OpenWRT EFI image to rootfs.tar.gz
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_url:
+        description: "URL to OpenWRT efi.img.gz"
+        required: true
+        default: "https://example.com/openwrt-xx.xx.2025-armsr-armv8-generic-ext4-combined-efi.img.gz"
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y kpartx mount losetup gzip tar curl
+
+    - name: Download image
+      run: |
+        curl -L "${{ github.event.inputs.image_url }}" -o image.img.gz
+
+    - name: Run convert script
+      run: |
+        chmod +x scripts/convert.sh
+        sudo ./scripts/convert.sh image.img.gz
+
+    - name: Upload rootfs.tar.gz
+      uses: actions/upload-artifact@v4
+      with:
+        name: openwrt-rootfs
+        path: rootfs.tar.gz
